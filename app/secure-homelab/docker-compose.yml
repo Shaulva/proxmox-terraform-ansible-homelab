@@ -1,0 +1,19 @@
+#Minimal version
+
+version: "3.9"
+
+services:
+
+  traefik:
+    image: traefik:v3.0
+    ports:
+      - "443:443"
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.websecure.address=:443"
+
+  authelia:
+    image: authelia/authelia
+
+  grafana:
+    image: grafana/grafana
