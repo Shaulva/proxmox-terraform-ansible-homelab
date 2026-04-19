@@ -7,8 +7,10 @@ git clone https://github.com/yourusername/secure-homelab.git
 
 cd secure-homelab 
 
-cp .env.example .env 
+cp .env.example .env
+
 nano .env 
 
-bash scripts/init.sh 
+bash scripts/init.sh
+
 docker compose up -d
