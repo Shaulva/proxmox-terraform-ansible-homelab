@@ -9,4 +9,4 @@ This project simulates a production-ready DevOps pipeline:
 - Containerized services (Docker)
 
 
-./scripts/init.sh
+./scripts/deploy.sh
