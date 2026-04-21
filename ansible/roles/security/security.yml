@@ -1,0 +1,13 @@
+- name: Allow SSH
+  ufw:
+    rule: allow
+    port: 22
+
+- name: Allow HTTPS
+  ufw:
+    rule: allow
+    port: 443
+
+- name: Enable firewall
+  ufw:
+    state: enabled
