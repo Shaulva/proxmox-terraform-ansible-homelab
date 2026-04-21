@@ -1,19 +1,68 @@
-#Minimal version
-
 version: "3.9"
+
+networks:
+  proxy:
+    external: false
 
 services:
 
   traefik:
     image: traefik:v3.0
+    container_name: traefik
+    restart: always
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.file.directory=/dynamic"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+      - "--certificatesresolvers.le.acme.email=${EMAIL}"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
     ports:
       - "443:443"
-    command:
-      - "--providers.docker=true"
-      - "--entrypoints.websecure.address=:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/traefik.yml
+      - ./traefik/dynamic:/dynamic
+      - ./letsencrypt:/letsencrypt
+    networks:
+      - proxy
 
   authelia:
     image: authelia/authelia
+    container_name: authelia
+    volumes:
+      - ./authelia:/config
+    networks:
+      - proxy
 
   grafana:
     image: grafana/grafana
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN}`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls.certresolver=le"
+      - "traefik.http.routers.grafana.middlewares=authelia@file"
+    networks:
+      - proxy
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - proxy
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    networks:
+      - proxy
+
+  node-exporter:
+    image: prom/node-exporter
+    networks:
+      - proxy
