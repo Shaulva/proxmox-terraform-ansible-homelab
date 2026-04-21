@@ -3,7 +3,7 @@ Proxmox Terraform + Ansible Homelab
 
 This project demonstrates a secure, production-inspired self-hosted infrastructure built with modern DevOps practices.
 
-git clone https://github.com/yourusername/secure-homelab.git
+git clone https://github.com/Shaulva/secure-homelab.git
 
 cd secure-homelab 
 
