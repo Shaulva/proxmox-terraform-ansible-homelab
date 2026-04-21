@@ -1,0 +1,9 @@
+- name: Copy app
+  copy:
+    src: ../../app/secure-homelab/
+    dest: /opt/secure-homelab/
+
+- name: Deploy stack
+  command: docker compose up -d
+  args:
+    chdir: /opt/secure-homelab/
