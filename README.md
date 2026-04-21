@@ -10,3 +10,5 @@ This project simulates a production-ready DevOps pipeline:
 
 
 ./scripts/deploy.sh
+
+Work in progress ...
