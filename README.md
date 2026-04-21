@@ -1,16 +1,12 @@
 # proxmox-terraform-ansible-homelab
 Proxmox Terraform + Ansible Homelab
 
-This project demonstrates a secure, production-inspired self-hosted infrastructure built with modern DevOps practices.
+Automated infrastructure provisioning using Terraform and configuration management using Ansible on Proxmox VE.
 
-git clone https://github.com/Shaulva/secure-homelab.git
+This project simulates a production-ready DevOps pipeline:
+- Infrastructure as Code (Terraform)
+- Configuration as Code (Ansible)
+- Containerized services (Docker)
 
-cd secure-homelab 
 
-cp .env.example .env
-
-nano .env 
-
-bash scripts/init.sh
-
-docker compose up -d
+./scripts/init.sh
