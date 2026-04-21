@@ -1,0 +1,8 @@
+- hosts: vm
+  become: true
+
+  roles:
+    - common
+    - docker
+    - security
+    - homelab
